@@ -1,0 +1,72 @@
+<html>
+   <head>
+       <title>
+           Time Down JS
+       </title>
+   </head>
+   <body>
+       <div class="settime">
+            <label>Hour :</label>
+           <input type="number" min="0" max="60" name="hour" id="hour">
+           <label>Minute :</label>
+           <input type="number" min="0" max="60" name="minute" id="minute">
+           <label>Second :</label>
+           <input type="number" min="0" max="60" name="second" id="second">
+           <button id="start">Start</button>
+       </div>
+       <div id="gettime">
+           <h3>00:00:00</h3>
+       </div>
+   </body>
+    <script>
+    function downTime(time){
+        var time,hour,minute,second;
+        myTime = setInterval(function(){
+                hour = parseInt(time/3600);
+                minute = parseInt((time%3600)/60);
+                second = parseInt(time%60);
+                hour < 10 ? hour = '0'+hour : hour;
+                minute < 10 ? minute = '0'+minute : minute;
+                second < 10 ? second = '0'+second : second;
+                time--;
+                document.getElementById('gettime').innerHTML = "<h3>"+hour+":"+minute+":"+second+"</h3><button id='pause'>Pause</button><button id='continue'>Continue</button>";
+                document.getElementById('start').setAttribute('disabled','');
+                document.getElementById('pause').addEventListener('click',function(){
+                            clearInterval(myTime);
+                            myTime = null;
+                        })
+            
+                if(time <0){
+                    document.getElementById('start').removeAttribute("disabled");
+                    clearInterval(myTime);
+                }
+            },1000)
+    }
+
+    function getTime(){
+        var hour,minute,second;
+        hour = document.getElementById('hour').value;
+        minute = document.getElementById('minute').value;
+        second = document.getElementById('second').value;
+        hour != '' ?hour=parseInt(hour) :hour =00;
+        minute != '' ?minute=parseInt(minute) :minute =00;
+        second != '' ?second=parseInt(second) :second =00;
+        time = (hour*3600)+(minute*60)+second;
+        downTime(time);
+    }
+    document.addEventListener('DOMContentLoaded',function(){
+        var myTime = null;
+        document.getElementById('start').addEventListener('click',function(){
+            getTime();
+        })
+    })
+//    getTime(19);
+</script>
+
+</html>
+
+
+
+
+
+
